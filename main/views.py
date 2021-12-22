@@ -1,9 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import MainCarousel, OfferCarousel
 
 
 def index(request) : 
-    return render(request, 'main/index.html')
+    main_images_collection = MainCarousel.objects.values('image')
+    main_images = {item['image'] for item in main_images_collection}
+
+    offer_images_collection = OfferCarousel.objects.values('image')
+    offer_images = {item['image'] for item in offer_images_collection}
+
+    params = {'main_images' : main_images, 'offer_images' : offer_images}
+
+    return render(request, 'main/index.html', params)
 
 def about(request) :
     return HttpResponse("About us")
