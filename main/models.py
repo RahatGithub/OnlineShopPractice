@@ -16,3 +16,12 @@ class OfferCarousel(models.Model) :
 
     def __str__(self):
         return self.title
+
+
+class Categories(models.Model) : 
+    category_id = models.AutoField
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="main/images", default="")
+
+    def __str__(self):
+        return self.name
