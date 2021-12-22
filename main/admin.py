@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import MainCarousel, OfferCarousel
 
-# Register your models here.
+
+admin.site.register(MainCarousel)
+admin.site.register(OfferCarousel)
