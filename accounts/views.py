@@ -23,7 +23,7 @@ def register(request):
                 user.first_name, user.last_name = firstname, lastname
                 user.save()
                 auth.login(request, user)
-                return redirect("/")
+                return redirect("/main/")
         else :
             messages.info(request, 'Password not matched!')
             return redirect("register")
@@ -38,7 +38,7 @@ def login(request):
         user = auth.authenticate(request, username=username, password=password)
         if user:
             auth.login(request, user)
-            return redirect("/")
+            return redirect("/main/")
         else:           
             return render(request, "accounts/login.html")
     return render(request, "accounts/login.html")
@@ -47,4 +47,4 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect("/")
+    return redirect("/main/")

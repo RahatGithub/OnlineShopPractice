@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import MainCarousel, OfferCarousel
+from .models import MainCarousel, OfferCarousel, Categories
 
 
 def index(request) : 
@@ -8,8 +8,10 @@ def index(request) :
     main_images = {item['image'] for item in main_images_collection}
     offer_images_collection = OfferCarousel.objects.values('image')
     offer_images = {item['image'] for item in offer_images_collection}
+    category_images_collection = Categories.objects.values('image')
+    category_images = {item['image'] for item in category_images_collection}
 
-    params = {'main_images' : main_images, 'offer_images' : offer_images}
+    params = {'main_images' : main_images, 'offer_images' : offer_images, 'category_images': category_images}
 
     return render(request, 'main/index.html', params)
 
