@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import MainCarousel, OfferCarousel, Categories
+from .models import MainCarousel, OfferCarousel, Categories, Product
 
 
 def index(request) : 
@@ -10,9 +10,12 @@ def index(request) :
     offer_images = {item['image'] for item in offer_images_collection}
     category_images_collection = Categories.objects.values('image')
     category_images = {item['image'] for item in category_images_collection}
+    # Try doing the same with the above cases 
+    categories_collection = Categories.objects.all()
+    categories = {item for item in categories_collection}
 
-    params = {'main_images' : main_images, 'offer_images' : offer_images, 'category_images': category_images}
-
+    params = {'main_images' : main_images, 'offer_images' : offer_images, 'category_images': category_images, 'categories' : categories}
+    print(categories)
     return render(request, 'main/index.html', params)
 
 
@@ -36,5 +39,12 @@ def checkout(request) :
     return HttpResponse("checkout")
 
 
-def product_view(request) :
+def category_view(request, id) :
+    category = Categories.objects.filter(id=id)[0]
+    print(category)
+
+    return HttpResponse("category view")
+
+
+def product_view(request, id) :
     return HttpResponse("product view")

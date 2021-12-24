@@ -72,9 +72,10 @@
         <div class="categories my-3">
             <h5 class="text-center mb-3">Shop by category</h5>
             <div class="owl-carousel owl-theme">
-                {% for img in category_images %}
+                {% for category in categories %}
                 <div class="item">
-                    <img src='/media/{{img}}' alt="">
+                    <img src='/media/{{category.image}}' alt="">
+                    <a href="/main/categories/{{category.id}}" id="category_view{{category.id}}" class="btn btn-primary">{{category.name}}</a>
                 </div>
                 {% endfor %}
             </div>
@@ -108,3 +109,4 @@
         })
     </script>
 {% endblock %}    
+
