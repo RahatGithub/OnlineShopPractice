@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import MainCarousel, OfferCarousel, Categories, Product
-
+from math import ceil
 
 def index(request) : 
     main_images_collection = MainCarousel.objects.values('image')
@@ -15,7 +15,7 @@ def index(request) :
     categories = {item for item in categories_collection}
 
     params = {'main_images' : main_images, 'offer_images' : offer_images, 'category_images': category_images, 'categories' : categories}
-    print(categories)
+
     return render(request, 'main/index.html', params)
 
 
@@ -41,10 +41,13 @@ def checkout(request) :
 
 def category_view(request, id) :
     category = Categories.objects.filter(id=id)[0]
-    print(category)
-
-    return HttpResponse("category view")
+    products = Product.objects.filter(category=category)
+    num_of_products = len(products)
+    num_of_rows = ceil(num_of_products/4)
+    params = {'category' : category, 'products' : products, 'num_of_products' : num_of_products}
+    return render(request, 'main/category_view.html', params)
 
 
 def product_view(request, id) :
-    return HttpResponse("product view")
+    product = Product.objects.filter(id=id)[0]
+    return render(request, 'main/product_view.html', {'product' : product})
