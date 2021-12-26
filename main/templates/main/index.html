@@ -73,9 +73,11 @@
             <h5 class="text-center mb-3">Shop by category</h5>
             <div class="owl-carousel owl-theme">
                 {% for category in categories %}
-                <div class="item">
+                <div class="item bg-dark">
                     <img src='/media/{{category.image}}' alt="">
-                    <a href="/main/categories/{{category.id}}" id="category_view{{category.id}}" class="btn btn-primary">{{category.name}}</a>
+                    <div class="d-flex justify-content-center p-2">
+                        <a href="/main/categories/{{category.id}}" id="category_view{{category.id}}" class="btn btn-outline-info">{{category.name}}</a>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -94,7 +96,7 @@
             margin: 20,
             nav: false,
             autoplay: true,
-            autoplayTimeout: 2000,
+            autoplayTimeout: 3000,
             responsive:{
                 0:{
                     items:1

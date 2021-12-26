@@ -41,10 +41,8 @@ def checkout(request) :
 
 def category_view(request, id) :
     category = Categories.objects.filter(id=id)[0]
-    products = Product.objects.filter(category=category)
-    num_of_products = len(products)
-    num_of_rows = ceil(num_of_products/4)
-    params = {'category' : category, 'products' : products, 'num_of_products' : num_of_products}
+    products = Product.objects.filter(category=category) 
+    params = {'category' : category, 'products' : products}
     return render(request, 'main/category_view.html', params)
 
 

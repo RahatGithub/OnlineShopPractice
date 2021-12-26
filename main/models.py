@@ -21,6 +21,7 @@ class OfferCarousel(models.Model) :
 class Categories(models.Model) : 
     category_id = models.AutoField
     name = models.CharField(max_length=50)
+    desc = models.CharField(max_length=500, default="")
     image = models.ImageField(upload_to="main/images", default="")
 
     def __str__(self):
