@@ -1,12 +1,12 @@
 {% extends 'main/base.html' %}
 
+{% load static %}
+
 {% block title %} {{category.name}} {% endblock %}
 
 
 
 {% block body %}
-
-    {% load static %}
 
     <!-- Info of this category -->
     <div class="container my-5">
@@ -29,10 +29,10 @@
                     <div class="card h-100 shadow pb-2 mb-2 bg-white rounded">
                         <img src="/media/{{product.image}}" class="card-img-top h-50" alt="...">
                         <div class="card-body">
-                            <h6 class="card-title text-info">{{product.product_name}}</h6>
+                            <h6 class="card-title text-info">{{product.name}}</h6>
                             <p class="card-text">{{product.desc|slice:"0:80"}}...</p>
                             <h6>BDT. {{product.price}}</h6>
-                            <button class="btn btn-info">Add to cart</button>
+                            <button id="product{{product.id}}" class="btn btn-info cart">Add to cart</button>
                             <a href="/main/products/{{product.id}}" id="product_view{{product.id}}" class="btn btn-outline-info">View</a>
                         </div>
                     </div>
@@ -46,24 +46,30 @@
 {% block js %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="{% static 'main/js/category_view.js' %}"></script> --> <!--Required when using external js file from static-->
     <script>
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 20,
-            nav: false,
-            autoplay: true,
-            autoplayTimeout: 2000,
-            responsive:{
-                0:{
-                    items:1
-                },
-                600:{
-                    items:3
-                },
-                1000:{
-                    items:5
-                }
+
+        if(localStorage.getItem('cart') == null){
+            cart = {};
+        }
+        else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            document.getElementById('cart').innerHTML = Object.keys(cart).length;
+        }
+        $('.cart').click(function(){
+
+            var idStr = this.id.toString();
+            console.log(idStr);
+
+            if(cart[idStr] != undefined){
+                cart[idStr] = cart[idStr] + 1;
             }
-        })
+            else {
+                cart[idStr] = 1;
+            }
+            console.log(cart);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cart').innerHTML = Object.keys(cart).length;
+        });
     </script>
 {% endblock %}  

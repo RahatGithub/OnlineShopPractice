@@ -2,7 +2,7 @@ from django.db import models
 
 
 class MainCarousel(models.Model) : 
-    main_carousel_id = models.AutoField
+    id = models.AutoField
     title = models.CharField(max_length=50)
     image = models.ImageField(upload_to="main/images", default="")
 
@@ -10,7 +10,7 @@ class MainCarousel(models.Model) :
         return self.title
 
 class OfferCarousel(models.Model) : 
-    offer_carousel_id = models.AutoField
+    id = models.AutoField
     title = models.CharField(max_length=50)
     image = models.ImageField(upload_to="main/images", default="")
 
@@ -19,7 +19,7 @@ class OfferCarousel(models.Model) :
 
 
 class Categories(models.Model) : 
-    category_id = models.AutoField
+    id = models.AutoField
     name = models.CharField(max_length=50)
     desc = models.CharField(max_length=500, default="")
     image = models.ImageField(upload_to="main/images", default="")
@@ -29,8 +29,8 @@ class Categories(models.Model) :
 
 
 class Product(models.Model):
-    product_id = models.AutoField
-    product_name = models.CharField(max_length=50)
+    id = models.AutoField
+    name = models.CharField(max_length=50)
     desc = models.CharField(max_length=1000)
     category = models.CharField(max_length=50, default="")
     subcategory = models.CharField(max_length=50, default="")
@@ -39,4 +39,4 @@ class Product(models.Model):
     pub_date = models.DateField()
 
     def __str__(self):
-        return self.product_name + ' (' + self.category + ')'
+        return self.name + ' (' + self.category + ')'
