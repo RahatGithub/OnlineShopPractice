@@ -40,3 +40,28 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name + ' (' + self.category + ')'
+    
+    
+    
+class Contact(models.Model):
+    msg_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=70, default="")
+    phone = models.CharField(max_length=70, default="")
+    desc = models.CharField(max_length=500, default="")
+
+
+    def __str__(self):
+        return self.name
+    
+    
+    
+class Cont_info(models.Model):
+    id = models.AutoField
+    phone = models.CharField(max_length=50)
+    address = models.CharField(max_length=1000)
+    email = models.CharField(max_length=50)
+    page = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.phone
