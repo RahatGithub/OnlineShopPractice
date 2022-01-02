@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import MainCarousel, OfferCarousel, Categories, Product
+from .models import MainCarousel, OfferCarousel, Categories, Product , Contact, Cont_info
 from math import ceil
 
 def index(request) : 
@@ -31,8 +31,22 @@ def search(request) :
     return HttpResponse("search")
 
 
-def contact(request) :
-    return HttpResponse("contact")
+def contact(request):
+    
+    thank=False
+    if request.method=="POST":
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        desc = request.POST.get('desc', '')
+        contact = Contact(name=name, email=email, phone=phone, desc=desc)
+        contact.save()
+        thank=True
+    
+    emails_collection = Cont_info.objects.values('email')
+    emails = {item['email'] for item in emails_collection}
+    
+    return render(request, 'main/contact.html', {'thank':thank, 'emails':emails})
 
 
 def checkout(request) :
