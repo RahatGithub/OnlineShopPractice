@@ -82,6 +82,20 @@
                 {% endfor %}
             </div>
         </div>
+        <!--
+        <div class="dynamic-sec my-3">
+            <h5 class="text-center mb-3">{{}}</h5>
+            <div class="owl-carousel owl-theme">
+                {% for category in categories %}
+                <div class="item bg-dark">
+                    <img src='/media/{{category.image}}' alt="">
+                    <div class="d-flex justify-content-center p-2">
+                        <a href="/main/categories/{{category.id}}" id="category_view{{category.id}}" class="btn btn-outline-info">{{category.name}}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div> -->
 
     </section>
 
@@ -90,12 +104,9 @@
 {% block js %}
     <script>
 
-        var show_popover = function(){
-            $('#popcart').popover();
-            console.log("popover ",$.fn.jquery);
-        };
-        
+        $('#popcart').popover(); //shows the pop over for cart
 
+        //function to run the categories owl-carousel
         (function ($) {
             $('.owl-carousel').owlCarousel({
                 loop: true,
@@ -115,12 +126,8 @@
                     }
                 }
             }); 
-            console.log("owl-carousel ",$.fn.jquery);
         }(owl_carousel_version));
-
-        show_popover(); //calling this function will show the popover
         
-
     </script>
 {% endblock %}    
 
