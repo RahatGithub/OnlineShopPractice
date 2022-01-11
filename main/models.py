@@ -41,7 +41,19 @@ class Product(models.Model):
     def __str__(self):
         return self.name + ' (' + self.category + ')'
     
-    
+
+class Dynamic_Product(models.Model) :
+    id = models.AutoField
+    name = models.CharField(max_length=50)
+    desc = models.CharField(max_length=1000)
+    caption = models.CharField(max_length=50)
+    price = models.IntegerField(default=0)
+    image = models.ImageField(upload_to="shop/images", default="")
+    pub_date = models.DateField()
+
+    def __str__(self):
+        return self.name + ' (' + self.caption + ')'
+
     
 class Contact(models.Model):
     msg_id = models.AutoField(primary_key=True)
@@ -50,11 +62,10 @@ class Contact(models.Model):
     phone = models.CharField(max_length=70, default="")
     desc = models.CharField(max_length=500, default="")
 
-
     def __str__(self):
         return self.name
     
-    
+
     
 class Cont_info(models.Model):
     id = models.AutoField

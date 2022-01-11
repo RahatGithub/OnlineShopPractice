@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import MainCarousel, OfferCarousel, Categories, Product , Contact, Cont_info
+from .models import MainCarousel, OfferCarousel, Categories, Product , Contact, Cont_info, Dynamic_Product
 from math import ceil
 
 def index(request) : 
@@ -14,7 +14,20 @@ def index(request) :
     categories_collection = Categories.objects.all()
     categories = {item for item in categories_collection}
 
-    params = {'main_images' : main_images, 'offer_images' : offer_images, 'category_images': category_images, 'categories' : categories}
+    dynamicProds = []
+    productCaptions = Dynamic_Product.objects.values('caption', 'id')
+    captions = {item['caption'] for item in productCaptions}
+    for caption in captions :
+        prod = Dynamic_Product.objects.filter(caption=caption)
+        dynamicProds.append(prod)
+
+    params = {
+        'main_images' : main_images, 
+        'offer_images' : offer_images, 
+        'category_images': category_images, 
+        'categories' : categories, 
+        'dynamicProds' : dynamicProds
+    }
 
     return render(request, 'main/index.html', params)
 
@@ -62,4 +75,8 @@ def category_view(request, id) :
 
 def product_view(request, id) :
     product = Product.objects.filter(id=id)[0]
+    return render(request, 'main/product_view.html', {'product' : product})
+
+def dynamic_product_view(request, id) :
+    product = Dynamic_Product.objects.filter(id=id)[0]
     return render(request, 'main/product_view.html', {'product' : product})

@@ -8,6 +8,12 @@
     .carousel-item img { 
         height: 300px;
     }
+    .categories img {
+        height: 200px;
+    }
+    .homepage-section img{
+        height: 200px;
+    }
 {% endblock %}
 
 {% block body %} 
@@ -82,20 +88,22 @@
                 {% endfor %}
             </div>
         </div>
-        <!--
-        <div class="dynamic-sec my-3">
-            <h5 class="text-center mb-3">{{}}</h5>
-            <div class="owl-carousel owl-theme">
-                {% for category in categories %}
-                <div class="item bg-dark">
-                    <img src='/media/{{category.image}}' alt="">
-                    <div class="d-flex justify-content-center p-2">
-                        <a href="/main/categories/{{category.id}}" id="category_view{{category.id}}" class="btn btn-outline-info">{{category.name}}</a>
+
+        {% for category in dynamicProds %}
+            <div class="homepage-section my-3">
+                <h5 class="text-center mb-3">{{category.0.caption}}</h5>
+                <div class="owl-carousel owl-theme">
+                    {% for product in category %}
+                    <div class="item bg-light">
+                        <img src='/media/{{product.image}}' alt="">
+                        <div class="d-flex justify-content-center p-2">
+                            <a href="/main/dynamic_products/{{product.id}}" id="dynamic_product_view{{product.id}}" class="btn btn-outline-info">{{product.name}}</a>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-        </div> -->
+        {% endfor %}
 
     </section>
 
