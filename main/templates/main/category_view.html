@@ -46,14 +46,12 @@
 {% endblock %}
 
 {% block js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- <script src="{% static 'main/js/category_view.js' %}"></script> --> <!--Required when using external js file from static-->
     
     <script>
         
         if(localStorage.getItem('cart') == null){
-            cart = {};
+            var cart = {};
         }
         else {
             cart = JSON.parse(localStorage.getItem('cart'));
@@ -86,7 +84,7 @@
                 popStr = popStr + document.getElementById('name_' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
                 i = i + 1;
             }
-            popStr = popStr + "</div> <a href='/main/checkout'><button class='btn btn-primary' id ='checkout'>Checkout</button></a> <button class='btn btn-info' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+            popStr = popStr + "</div> <a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
             document.getElementById('popcart').setAttribute('data-content', popStr);
             $('#popcart').popover();
         }
@@ -94,7 +92,7 @@
         function clearCart() {
             cart = JSON.parse(localStorage.getItem('cart'));
             for (var item in cart) {
-                document.getElementById('div_' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cart">Add To Cart</button>'
+                document.getElementById('div_' + item).innerHTML = '<button id="' + item + '" class="btn btn-info cart">Add To Cart</button>'
             }
             localStorage.clear();
             cart = {};
@@ -120,7 +118,7 @@
             cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
 
             if(cart['pr' + a][0]==0){
-                document.getElementById('div_pr' + a).innerHTML = '<button id="pr' + a + '" class="btn btn-primary cart">Add To Cart</button>';
+                document.getElementById('div_pr' + a).innerHTML = '<button id="pr' + a + '" class="btn btn-info cart">Add To Cart</button>';
                 delete cart['pr' + a];
             }
             else {

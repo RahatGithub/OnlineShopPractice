@@ -96,8 +96,14 @@
                     {% for product in category %}
                     <div class="item bg-light">
                         <img src='/media/{{product.image}}' alt="">
-                        <div class="d-flex justify-content-center p-2">
-                            <a href="/main/dynamic_products/{{product.id}}" id="dynamic_product_view{{product.id}}" class="btn btn-outline-info">{{product.name}}</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="/main/dynamic_products/{{product.id}}" id="dynamic_product_view{{product.id}}" class="text-info">{{product.name}}</a>
+                        </div>
+                        <div class="d-flex justify-content-around px-2">
+                            <span id="div_pr{{product.id}}" class="div_pr">
+                                <button id="pr{{product.id}}" class="btn btn-info cart">Add to cart</button>
+                            </span>
+                            <a href="/main/dynamic_products/{{product.id}}"><button id="view_pr{{product.id}}" class="btn btn-outline-info cart">View</button></a>
                         </div>
                     </div>
                     {% endfor %}
