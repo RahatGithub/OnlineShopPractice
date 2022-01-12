@@ -86,7 +86,8 @@
             }
             popStr = popStr + "</div> <a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
             document.getElementById('popcart').setAttribute('data-content', popStr);
-            $('#popcart').popover();
+           
+            $('#popcart').popover('toggle');
         }
 
         function clearCart() {
@@ -107,7 +108,6 @@
             }
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cart').innerHTML = sum;
-            console.log(cart);
             updatePopover(cart);
         }
 
