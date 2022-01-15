@@ -30,7 +30,7 @@
                         <img src="/media/{{product.image}}" class="card-img-top h-50" alt="...">
                         <div class="card-body">
                             <h6 id="name_pr{{product.id}}" class="card-title text-info">{{product.name}}</h6>
-                            <p class="card-text">{{product.desc|slice:"0:80"}}...</p>
+                            <p class="card-text">{{product.desc|slice:"0:60"}}...</p>
                             <h6 >BDT. <span id="price_pr{{product.id}}">{{product.price}}</span></h6>
                             <span id="div_pr{{product.id}}" class="div_pr">
                                 <button id="pr{{product.id}}" class="btn btn-info cart">Add to cart</button>
@@ -49,15 +49,15 @@
     <!-- <script src="{% static 'main/js/category_view.js' %}"></script> --> <!--Required when using external js file from static-->
     
     <script>
-        
+
         if(localStorage.getItem('cart') == null){
-            var cart = {};
+          var cart = {};
         }
         else {
             cart = JSON.parse(localStorage.getItem('cart'));
             updateCart(cart);
         }
-
+        
         $('.div_pr').on('click', 'button.cart', function() {
             var idstr = this.id.toString();
             if (cart[idstr] != undefined) {
@@ -71,10 +71,10 @@
             }
             updateCart(cart);
         });
-
+        
         $('#popcart').popover();
         updatePopover(cart);
-
+        
         function updatePopover(cart) {
             var popStr = "";
             popStr = popStr + "<h5> Your Shopping Cart </h5><div class='mx-2 my-2'>";
@@ -86,10 +86,10 @@
             }
             popStr = popStr + "</div> <a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
             document.getElementById('popcart').setAttribute('data-content', popStr);
-           
+          
             $('#popcart').popover('toggle');
         }
-
+        
         function clearCart() {
             cart = JSON.parse(localStorage.getItem('cart'));
             for (var item in cart) {
@@ -99,7 +99,7 @@
             cart = {};
             updateCart(cart);
         }
-
+        
         function updateCart(cart) {
             var sum = 0;
             for (var item in cart) {
@@ -110,13 +110,13 @@
             document.getElementById('cart').innerHTML = sum;
             updatePopover(cart);
         }
-
+        
         // If plus or minus button is clicked, change the cart as well as the display value
         $('.div_pr').on("click", "button.minus", function() {
             a = this.id.slice(7, );
             cart['pr' + a][0] = cart['pr' + a][0] - 1;
             cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
-
+        
             if(cart['pr' + a][0]==0){
                 document.getElementById('div_pr' + a).innerHTML = '<button id="pr' + a + '" class="btn btn-info cart">Add To Cart</button>';
                 delete cart['pr' + a];
@@ -132,7 +132,7 @@
             document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
             updateCart(cart);
         });
-        
-    </script>
-    
+  
+      </script>
+
 {% endblock %}  

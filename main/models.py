@@ -30,6 +30,7 @@ class Categories(models.Model) :
 
 class Product(models.Model):
     id = models.AutoField
+    code = models.CharField(max_length=20, default="")
     name = models.CharField(max_length=50)
     desc = models.CharField(max_length=1000)
     category = models.CharField(max_length=50, default="")
@@ -44,6 +45,7 @@ class Product(models.Model):
 
 class Dynamic_Product(models.Model) :
     id = models.AutoField
+    code = models.CharField(max_length=20, default="")
     name = models.CharField(max_length=50)
     desc = models.CharField(max_length=1000)
     caption = models.CharField(max_length=50)
