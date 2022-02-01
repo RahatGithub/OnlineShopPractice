@@ -29,13 +29,13 @@
                     <div class="card h-100 shadow pb-2 mb-2 bg-white rounded">
                         <img src="/media/{{product.image}}" class="card-img-top h-50" alt="...">
                         <div class="card-body">
-                            <h6 id="name_pr{{product.id}}" class="card-title text-info">{{product.name}}</h6>
+                            <h6 id="name_pr{{product.code}}" class="card-title text-info">{{product.name}}</h6>
                             <p class="card-text">{{product.desc|slice:"0:60"}}...</p>
-                            <h6 >BDT. <span id="price_pr{{product.id}}">{{product.price}}</span></h6>
-                            <span id="div_pr{{product.id}}" class="div_pr">
-                                <button id="pr{{product.id}}" class="btn btn-info cart">Add to cart</button>
+                            <h6 >BDT. <span id="price_pr{{product.code}}">{{product.price}}</span></h6>
+                            <span id="div_pr{{product.code}}" class="div_pr">
+                                <button id="pr{{product.code}}" class="btn btn-info cart">Add to cart</button>
                             </span>
-                            <a href="/main/products/{{product.id}}"><button id="view_pr{{product.id}}" class="btn btn-outline-info cart">View</button></a>
+                            <a href="/main/products/{{product.code}}"><button id="view_pr{{product.code}}" class="btn btn-outline-info cart">View</button></a>
                         </div>
                     </div>
                 </div>
@@ -67,26 +67,35 @@
                 qty = 1;
                 name = document.getElementById('name_'+idstr).innerHTML
                 price = document.getElementById('price_'+idstr).innerHTML
+                console.log("name: ", name, "price: ", price);
                 cart[idstr] = [qty, name, parseInt(price)];
             }
             updateCart(cart);
+            //console.log(cart);
         });
         
         $('#popcart').popover();
         updatePopover(cart);
         
+        //এই ফাংশনের উপর কাজ করতে হবে। প্রত্যেক পেইজে popStr কল করার পর আগে সেটা খালি করে নিচ্ছে (popStr = "") এবং তারপর নতুন করে ঐ পেইজ থেকে এড করা 
+        //প্রোডাক্ট কার্টে দেখাচ্ছে। তাই প্রত্যেক পেইজে গেলে আলাদা আলাদা কার্ট দেখাচ্ছে। কার্টের জন্য আলাদা একটি সেকশন তৈরি করতে হবে যার display property by default 
+        //"none" হবে। তাহলে প্রত্যেক পেইজে গেলে নতুন করে popStr দেয়া লাগবে না, ঐ সেকশনের id/class ধরে নতুন প্রোডাক্ট এড করা যাবে। 
         function updatePopover(cart) {
             var popStr = "";
             popStr = popStr + "<h5> Your Shopping Cart </h5><div class='mx-2 my-2'>";
             var i = 1;
             for (var item in cart) {
-                popStr = popStr + "<b>" + i + "</b>. ";
+                if(document.getElementById('name_' + item)){
+                    popStr = popStr + "<b>" + i + "</b>. ";
+                    popStr = popStr + document.getElementById('name_' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
+                    i = i + 1;
+                }
+                /*popStr = popStr + "<b>" + i + "</b>. ";
                 popStr = popStr + document.getElementById('name_' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
-                i = i + 1;
+                i = i + 1;*/
             }
             popStr = popStr + "</div> <a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
             document.getElementById('popcart').setAttribute('data-content', popStr);
-          
             $('#popcart').popover('toggle');
         }
         
@@ -103,8 +112,11 @@
         function updateCart(cart) {
             var sum = 0;
             for (var item in cart) {
-                sum = sum + cart[item][0];
-                document.getElementById('div_' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-info minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
+                sum = sum + cart[item][0]; //cart[item][0] gives the quantity of 'item'
+                if(document.getElementById('div_' + item)){
+                    document.getElementById('div_' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-info minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
+                }
+                //document.getElementById('div_' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-info minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
             }
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cart').innerHTML = sum;
