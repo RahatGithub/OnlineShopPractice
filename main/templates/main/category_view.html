@@ -35,7 +35,7 @@
                             <span id="div_pr{{product.code}}" class="div_pr">
                                 <button id="pr{{product.code}}" class="btn btn-info cart">Add to cart</button>
                             </span>
-                            <a href="/main/products/{{product.code}}"><button id="view_pr{{product.code}}" class="btn btn-outline-info cart">View</button></a>
+                            <a href="/main/products/{{product.id}}"><button id="view_pr{{product.code}}" class="btn btn-outline-info cart">View</button></a>
                         </div>
                     </div>
                 </div>
@@ -65,9 +65,9 @@
                 
             } else {
                 qty = 1;
-                name = document.getElementById('name_'+idstr).innerHTML
-                price = document.getElementById('price_'+idstr).innerHTML
-                console.log("name: ", name, "price: ", price);
+                name = document.getElementById('name_' + idstr).innerHTML
+                price = document.getElementById('price_' + idstr).innerHTML
+                //console.log("name: ", name, "price: ", price);
                 cart[idstr] = [qty, name, parseInt(price)];
             }
             updateCart(cart);
@@ -77,24 +77,20 @@
         $('#popcart').popover();
         updatePopover(cart);
         
-        //এই ফাংশনের উপর কাজ করতে হবে। প্রত্যেক পেইজে popStr কল করার পর আগে সেটা খালি করে নিচ্ছে (popStr = "") এবং তারপর নতুন করে ঐ পেইজ থেকে এড করা 
-        //প্রোডাক্ট কার্টে দেখাচ্ছে। তাই প্রত্যেক পেইজে গেলে আলাদা আলাদা কার্ট দেখাচ্ছে। কার্টের জন্য আলাদা একটি সেকশন তৈরি করতে হবে যার display property by default 
-        //"none" হবে। তাহলে প্রত্যেক পেইজে গেলে নতুন করে popStr দেয়া লাগবে না, ঐ সেকশনের id/class ধরে নতুন প্রোডাক্ট এড করা যাবে। 
         function updatePopover(cart) {
-            var popStr = "";
-            popStr = popStr + "<h5> Your Shopping Cart </h5><div class='mx-2 my-2'>";
+            if(localStorage.getItem('popStr') == null){
+                localStorage.setItem('popStr', '{"popStr":"<h5> Your Shopping Cart </h5>"}')
+                //checkout, clear cart বাটন এর নিচে যুক্ত করে দিতে হবে। মাঝখানে popStr এর বাকি জিনিসগুলো যুক্ত হবে।  
+            }
+            popStr = JSON.parse(localStorage.getItem('popStr')).popStr;
             var i = 1;
             for (var item in cart) {
-                if(document.getElementById('name_' + item)){
-                    popStr = popStr + "<b>" + i + "</b>. ";
-                    popStr = popStr + document.getElementById('name_' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
-                    i = i + 1;
-                }
-                /*popStr = popStr + "<b>" + i + "</b>. ";
-                popStr = popStr + document.getElementById('name_' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
-                i = i + 1;*/
+                popStr += "<b>" + i + "</b>. ";
+                popStr += cart[item][1] + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
+                i = i + 1;
             }
-            popStr = popStr + "</div> <a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+            //clear cart বাটন কাজ করছে না 
+            popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
             document.getElementById('popcart').setAttribute('data-content', popStr);
             $('#popcart').popover('toggle');
         }

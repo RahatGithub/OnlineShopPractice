@@ -77,6 +77,12 @@ def product_view(request, id) :
     product = Product.objects.filter(id=id)[0]
     return render(request, 'main/product_view.html', {'product' : product})
 
+# tried with code instead of id
+# def product_view(request, code) :
+#     product = Product.objects.filter(code=code)[0]
+#     return render(request, 'main/product_view.html', {'product' : product})
+
+
 def dynamic_product_view(request, id) :
     product = Dynamic_Product.objects.filter(id=id)[0]
     return render(request, 'main/product_view.html', {'product' : product})
