@@ -28,14 +28,14 @@ height: 200px;
             <div id="MainCarousel" class="carousel slide carousel-fade" data-ride="carousel">
                 <div class="carousel-inner">
                     {% for img in main_images %}
-                    {% if forloop.first %}
-                    <div class="carousel-item active">
+                        {% if forloop.first %}
+                            <div class="carousel-item active">
                         {% else %}
-                        <div class="carousel-item">
-                            {% endif %}
-                            <img src='/media/{{img}}' class="d-block w-100" alt="...">
+                            <div class="carousel-item">
+                        {% endif %}
+                        <img src='/media/{{img}}' class="d-block w-100" alt="...">
                         </div>
-                        {% endfor %}
+                    {% endfor %}
                     </div>
                     <button class="carousel-control-prev" type="button" data-target="#MainCarousel" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -74,11 +74,10 @@ height: 200px;
                             <span class="sr-only">Next</span>
                         </button>
                     </div>
-                </div>
-                <!--OfferCarousel ends here-->
-
             </div>
-            <!--######## Header ends here ########-->
+            <!--OfferCarousel ends here-->
+    </div>
+    <!--######## Header ends here ########-->
 
             <div class="categories my-3">
                 <h5 class="text-center mb-3">Shop by category</h5>
@@ -177,7 +176,7 @@ height: 200px;
     updatePopover(cart);
 
     function updatePopover(cart) {
-        if (localStorage.getItem('popStr') == null) {
+        if (localStorage.getItem('popStr') == undefined) {
             localStorage.setItem('popStr', '{"popStr":"<h5> Your Shopping Cart </h5>"}')
             //checkout, clear cart বাটন এর নিচে যুক্ত করে দিতে হবে। মাঝখানে popStr এর বাকি জিনিসগুলো যুক্ত হবে।  
         }
@@ -190,7 +189,7 @@ height: 200px;
             popStr += cart[item][1] + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
             i = i + 1;
         }
-        //clear cart বাটন কাজ করছে না 
+
         popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
         document.getElementById('popcart').setAttribute('data-content', popStr);
 
@@ -200,7 +199,9 @@ height: 200px;
     function clearCart() {
         cart = JSON.parse(localStorage.getItem('cart'));
         for (var item in cart) {
-            document.getElementById('div_' + item).innerHTML = '<button id="' + item + '" class="btn btn-info cart">Add To Cart</button>'
+            if(document.getElementById('div_' + item)){
+                document.getElementById('div_' + item).innerHTML = '<button id="' + item + '" class="btn btn-info cart">Add To Cart</button>'
+            }
         }
         localStorage.clear();
         cart = {};
