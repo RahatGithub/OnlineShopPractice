@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import MainCarousel, OfferCarousel, Categories, Product , Contact, Cont_info, Dynamic_Product
+from .models import MainCarousel, OfferCarousel, Categories, Product , Contact, Cont_info, Dynamic_Product, Order, OrderUpdate
 from math import ceil
 
 def index(request) : 
@@ -63,7 +63,24 @@ def contact(request):
 
 
 def checkout(request) :
-    return HttpResponse("checkout")
+    if request.method=="POST":
+        items_json = request.POST.get('itemsJson', '')  
+        name = request.POST.get('name', '')
+        amount = request.POST.get('amount', '')
+        email = request.POST.get('email', '')
+        address = request.POST.get('address1', '') + " " + request.POST.get('address2', '')
+        city = request.POST.get('city', '')
+        zip_code = request.POST.get('zip_code', '')
+        phone = request.POST.get('phone', '')
+        order = Order(items_json=items_json, name=name, amount=amount, email=email, address=address, city=city, zip_code=zip_code, phone=phone)
+        order.save()
+        update = OrderUpdate(order_id=order.order_id, update_desc="The order has been placed")
+        update.save()
+        thank = True
+        id = order.order_id
+        print(items_json)
+        return render(request, 'main/checkout.html', {'thank':thank, 'id': id})
+    return render(request, 'main/checkout.html')
 
 
 def category_view(request, id) :

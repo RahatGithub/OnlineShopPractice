@@ -176,23 +176,23 @@ height: 200px;
     updatePopover(cart);
 
     function updatePopover(cart) {
-        if (localStorage.getItem('popStr') == undefined) {
-            localStorage.setItem('popStr', '{"popStr":"<h5> Your Shopping Cart </h5>"}')
+        /*if (localStorage.getItem('popStr') == null) {
+            localStorage.setItem('popStr', '{"popStr": "<h5> Your Shopping Cart </h5>"}')
             //checkout, clear cart বাটন এর নিচে যুক্ত করে দিতে হবে। মাঝখানে popStr এর বাকি জিনিসগুলো যুক্ত হবে।  
         }
         else {
             popStr = JSON.parse(localStorage.getItem('popStr')).popStr;
-        }
+        }*/ 
+        var popStr = "";
+        popStr += "<h5> Your Shopping Cart </h5>"
         var i = 1;
         for (var item in cart) {
             popStr += "<b>" + i + "</b>. ";
             popStr += cart[item][1] + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
-            i = i + 1;
+            i += 1;
         }
-
         popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
         document.getElementById('popcart').setAttribute('data-content', popStr);
-
         $('#popcart').popover('toggle');
     }
 
