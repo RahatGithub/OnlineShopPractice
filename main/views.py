@@ -90,6 +90,10 @@ def category_view(request, id) :
     return render(request, 'main/category_view.html', params)
 
 
+def caption_view(request, id) :
+    pass
+
+
 def product_view(request, id) :
     product = Product.objects.filter(id=id)[0]
     return render(request, 'main/product_view.html', {'product' : product})

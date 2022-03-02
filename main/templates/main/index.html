@@ -101,18 +101,15 @@ height: 200px;
                     {% for product in category %}
                         <div class="item bg-light">
                             <img src='/media/{{product.image}}' alt="">
-                            <div class="d-flex justify-content-center">
-                                <a href="/main/dynamic_products/{{product.id}}" id="dynamic_product_view{{product.id}}"
-                                    class="text-info">{{product.name}}</a>
-                            </div>
-                            <h6 id="name_pr{{product.code}}" class="card-title text-info">{{product.name}}</h6>
-                            <p class="card-text">{{product.desc|slice:"0:20"}}...</p>
+                            <h6 id="name_pr{{product.code}}" class="card-title text-info text-center">{{product.name}}</h6>
+                            <!-- <p class="card-text text-center">{{product.desc|slice:"0:40"}}...</p> -->
                             <h6>BDT. <span id="price_pr{{product.code}}">{{product.price}}</span></h6>
                             <span id="div_pr{{product.code}}" class="div_pr">
                                 <button id="pr{{product.code}}" class="btn btn-info cart">Add to cart</button>
                             </span>
-                            <a href="/main/dynamic_products/{{product.id}}"><button id="view_pr{{product.code}}"
-                                    class="btn btn-outline-info cart">View</button></a>
+                            <a href="/main/dynamic_products/{{product.id}}">
+                                <button id="view_pr{{product.code}}" class="btn btn-outline-info">View</button>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
@@ -184,14 +181,16 @@ height: 200px;
             popStr = JSON.parse(localStorage.getItem('popStr')).popStr;
         }*/ 
         var popStr = "";
-        popStr += "<h5> Your Shopping Cart </h5>"
+        popStr += "<h5> Your Shopping Cart </h5>";
         var i = 1;
         for (var item in cart) {
             popStr += "<b>" + i + "</b>. ";
             popStr += cart[item][1] + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
             i += 1;
         }
-        popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+        if( Object.keys(cart) != 0 ){
+            popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+        }
         document.getElementById('popcart').setAttribute('data-content', popStr);
         $('#popcart').popover('toggle');
     }

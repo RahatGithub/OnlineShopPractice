@@ -35,7 +35,9 @@
                             <span id="div_pr{{product.code}}" class="div_pr">
                                 <button id="pr{{product.code}}" class="btn btn-info cart">Add to cart</button>
                             </span>
-                            <a href="/main/products/{{product.id}}"><button id="view_pr{{product.code}}" class="btn btn-outline-info cart">View</button></a>
+                            <a href="/main/products/{{product.id}}">
+                                <button id="view_pr{{product.code}}" class="btn btn-outline-info">View</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -78,13 +80,6 @@
         updatePopover(cart);
         
         function updatePopover(cart) {
-            /*if(localStorage.getItem('popStr') == null){
-                localStorage.setItem('popStr', '{"popStr":"<h5> Your Shopping Cart </h5>"}')
-                //checkout, clear cart বাটন এর নিচে যুক্ত করে দিতে হবে। মাঝখানে popStr এর বাকি জিনিসগুলো যুক্ত হবে।  
-            }
-            else{
-                popStr = JSON.parse(localStorage.getItem('popStr')).popStr;
-            }*/ 
             var popStr = "";
             popStr += "<h5> Your Shopping Cart </h5><div class='mx-2 my-2'>";
             var i = 1;
@@ -93,8 +88,9 @@
                 popStr += cart[item][1] + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
                 i += 1;
             }
-            
-            popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+            if( Object.keys(cart) != 0 ){
+                popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+            }
             document.getElementById('popcart').setAttribute('data-content', popStr);
             $('#popcart').popover('toggle');
         }
