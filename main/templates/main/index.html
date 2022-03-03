@@ -14,6 +14,7 @@ height: 200px;
 .homepage-section img{
 height: 200px;
 }
+
 {% endblock %}
 
 {% block body %}
@@ -86,29 +87,26 @@ height: 200px;
                     <div class="item bg-dark">
                         <img src='/media/{{category.image}}' alt="">
                         <div class="d-flex justify-content-center p-2">
-                            <a href="/main/categories/{{category.id}}" id="category_view{{category.id}}"
-                                class="btn btn-outline-info">{{category.name}}</a>
+                            <a href="/main/categories/{{category.id}}" id="category_view{{category.id}}"class="btn btn-outline-info">{{category.name}}</a>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
 
-            {% for category in dynamicProds %}
+            {% for category, caption in dynamicProds %}
             <div class="homepage-section my-3">
                 <h5 class="text-center mb-3">{{category.0.caption}}</h5>
+                <a href="/main/captions/{{caption.id}}" id="caption_view{{caption.id}}">View All</a>
                 <div class="owl-carousel owl-theme">
                     {% for product in category %}
                         <div class="item bg-light">
                             <img src='/media/{{product.image}}' alt="">
                             <h6 id="name_pr{{product.code}}" class="card-title text-info text-center">{{product.name}}</h6>
                             <!-- <p class="card-text text-center">{{product.desc|slice:"0:40"}}...</p> -->
-                            <h6>BDT. <span id="price_pr{{product.code}}">{{product.price}}</span></h6>
-                            <span id="div_pr{{product.code}}" class="div_pr">
-                                <button id="pr{{product.code}}" class="btn btn-info cart">Add to cart</button>
-                            </span>
-                            <a href="/main/dynamic_products/{{product.id}}">
-                                <button id="view_pr{{product.code}}" class="btn btn-outline-info">View</button>
+                            <h6 class="text-center">BDT. <span id="price_pr{{product.code}}">{{product.price}}</span></h6>
+                            <a href="/main/dynamic_products/{{product.id}}" class="d-flex justify-content-center row">
+                                <button id="view_pr{{product.code}}" class="btn btn-outline-info col-md-4">View</button>
                             </a>
                         </div>
                     {% endfor %}

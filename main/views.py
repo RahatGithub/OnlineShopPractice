@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import MainCarousel, OfferCarousel, Categories, Product , Contact, Cont_info, Dynamic_Product, Order, OrderUpdate
+from .models import MainCarousel, OfferCarousel, Categories, Captions, Product , Contact, Cont_info, Dynamic_Product, Order, OrderUpdate
 from math import ceil
 
 def index(request) : 
@@ -16,16 +16,25 @@ def index(request) :
 
     dynamicProds = []
     productCaptions = Dynamic_Product.objects.values('caption', 'id')
-    captions = {item['caption'] for item in productCaptions}
+    captions_collection = Captions.objects.all()
+    captions = {item for item in captions_collection}
+    # captions = {item['caption'] for item in productCaptions}  # useful!
+    # for caption in captions :
+    #     prods = Dynamic_Product.objects.filter(caption=caption)
+    #     dynamicProds.append(prods)
+    
     for caption in captions :
-        prod = Dynamic_Product.objects.filter(caption=caption)
-        dynamicProds.append(prod)
+        prods = [Dynamic_Product.objects.filter(caption=caption), caption]
+        dynamicProds.append(prods)
+
+    print(dynamicProds)
 
     params = {
         'main_images' : main_images, 
         'offer_images' : offer_images, 
         'category_images': category_images, 
         'categories' : categories, 
+        'captions' : captions,
         'dynamicProds' : dynamicProds
     }
 
@@ -91,7 +100,10 @@ def category_view(request, id) :
 
 
 def caption_view(request, id) :
-    pass
+    caption = Captions.objects.filter(id=id)[0]
+    products = Dynamic_Product.objects.filter(caption=caption)
+    params = {'caption' : caption, 'products' : products}
+    return render(request, 'main/caption_view.html', params)
 
 
 def product_view(request, id) :
