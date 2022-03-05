@@ -86,7 +86,16 @@ def contact(request):
     emails_collection = Cont_info.objects.values('email')
     emails = {item['email'] for item in emails_collection}
     
-    return render(request, 'main/contact.html', {'thank':thank, 'emails':emails})
+    phones_collection = Cont_info.objects.values('phone')
+    phones = {item['phone'] for item in phones_collection}
+    
+    addresses_collection = Cont_info.objects.values('address')
+    addresses = {item['address'] for item in addresses_collection}
+    
+    pages_collection = Cont_info.objects.values('page')
+    pages = {item['page'] for item in pages_collection}
+    
+    return render(request, 'main/contact.html', {'thank':thank, 'emails':emails, 'phones':phones, 'pages': pages,'addresses':addresses})
 
 
 def checkout(request) :
