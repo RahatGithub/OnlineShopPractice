@@ -16,7 +16,7 @@ def index(request) :
     categories = {item for item in categories_collection}
 
     dynamicProds = []
-    productCaptions = Dynamic_Product.objects.values('caption', 'id')
+    # productCaptions = Dynamic_Product.objects.values('caption', 'id')
     captions_collection = Captions.objects.all()
     captions = {item for item in captions_collection}
     # captions = {item['caption'] for item in productCaptions}  # useful!
@@ -28,8 +28,6 @@ def index(request) :
         prods = [Dynamic_Product.objects.filter(caption=caption), caption]
         dynamicProds.append(prods)
 
-    print(dynamicProds)
-
     params = {
         'main_images' : main_images, 
         'offer_images' : offer_images, 
@@ -40,6 +38,36 @@ def index(request) :
     }
 
     return render(request, 'main/index.html', params)
+
+
+def search(request):
+    query = request.GET.get('search')
+    categories_collection = Categories.objects.values('category', 'id')
+    categories = {item['category'] for item in categories_collection}
+
+    dynamicProds = []
+    captions_collection = Captions.objects.values('caption', 'id')
+    captions = {item['caption'] for item in captions_collection}
+
+    for caption in captions :
+        # prods = [Dynamic_Product.objects.filter(caption=caption), caption]
+        prodtemp = Dynamic_Product.objects.filter(caption=caption)
+        prod = [item for item in prodtemp if searchMatch(query, item)]
+        if len(prod) != 0:
+            dynamicProds.append(prod)
+
+    print(dynamicProds)
+
+    # return render(request, 'main/search.html')
+    return HttpResponse('search OK')
+
+# Function to check if the query(given input) matches the item(info stored in database) 
+def searchMatch(query, item): 
+    # Checking if the query string is in any product's name or category. Using upper() for both to remove case sensitivity
+    if query.upper() in item.name.upper() or query in item.category.upper():
+        return True 
+    else: 
+        return False
 
 
 def about(request) :
@@ -65,10 +93,6 @@ def tracker(request):
             return HttpResponse('{"status":"error"}')
 
     return render(request, 'main/tracker.html')
-
-
-def search(request) :
-    return HttpResponse("search")
 
 
 def contact(request):
