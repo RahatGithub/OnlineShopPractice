@@ -69,7 +69,7 @@ def search(request):
 # Function to check if the query(given input) matches the item(info stored in database) 
 def searchMatch(query, item): 
     # Checking if the query string is in any product's name or category. Using upper() for both to remove case sensitivity
-    if query.upper() in item.name.upper() or query in item.caption.upper():
+    if query.upper() in item.name.upper() or query.upper() in item.caption.upper() or query.upper() in item.desc.upper():
         return True 
     else: 
         return False
