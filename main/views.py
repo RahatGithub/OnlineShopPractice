@@ -103,12 +103,6 @@ def tracker(request):
     return render(request, 'main/tracker.html')
 
 
-<<<<<<< HEAD
-=======
-def search(request):
-    return HttpResponse("search")
-
->>>>>>> d6595f5d5b439b5f96e19b701d74631a3dcb9051
 
 def contact(request):
 
