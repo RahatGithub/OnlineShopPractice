@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import MainCarousel, OfferCarousel, Categories, Captions, Product , Contact, Cont_info, Dynamic_Product, Order, OrderUpdate
+import json
 from math import ceil
 
 def index(request) : 
@@ -45,8 +46,25 @@ def about(request) :
     return HttpResponse("About us")
 
 
-def tracker(request) :
-    return HttpResponse("tracker page")
+def tracker(request):
+    if request.method=="POST":
+        orderId = request.POST.get('orderId', '')
+        email = request.POST.get('email', '')
+        try:
+            order = Order.objects.filter(order_id=orderId, email=email)
+            if len(order)>0:
+                update = OrderUpdate.objects.filter(order_id=orderId)
+                updates = []
+                for item in update:
+                    updates.append({'text': item.update_desc, 'time': item.timestamp})
+                    response = json.dumps({"status":"success", "updates":updates, "itemsJson":order[0].items_json}, default=str)
+                return HttpResponse(response)
+            else:
+                return HttpResponse('{"status":"noitem"}')
+        except Exception as e:
+            return HttpResponse('{"status":"error"}')
+
+    return render(request, 'main/tracker.html')
 
 
 def search(request) :
