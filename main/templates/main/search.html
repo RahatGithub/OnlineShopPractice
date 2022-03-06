@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block title %} search {% endblock %}
+
+
+{% block body %}
+
+    <!-- All products of this category -->
+    <div class="container my-5">
+        {% for product in dynamicProds %}
+        <h2>{{product.0.caption}}</h2>
+        <div class="row row-cols-2 row-cols-md-4">
+            {% for i in product %}
+                <div class="col my-2">
+                    <div class="card h-100 shadow pb-2 mb-2 bg-white rounded">
+                        <img src="/media/{{i.image}}" class="card-img-top h-50" alt="...">
+                        <div class="card-body">
+                            <h6 id="name_pr{{i.code}}" class="card-title text-info">{{i.name}}</h6>
+                            <p class="card-text">{{i.desc|slice:"0:60"}}...</p>
+                            <h6 >BDT. <span id="price_pr{{i.code}}">{{i.price}}</span></h6>
+                            <span id="div_pr{{i.code}}" class="div_pr">
+                                <button id="pr{{i.code}}" class="btn btn-info cart">Add to cart</button>
+                            </span>
+                            <a href="/main/products/{{i.id}}">
+                                <button id="view_pr{{i.code}}" class="btn btn-outline-info">View</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
