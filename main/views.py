@@ -94,8 +94,11 @@ def contact(request):
     
     pages_collection = Cont_info.objects.values('page')
     pages = {item['page'] for item in pages_collection}
-    
-    return render(request, 'main/contact.html', {'thank':thank, 'emails':emails, 'phones':phones, 'pages': pages,'addresses':addresses})
+
+    names_collection = Cont_info.objects.values('name')
+    names = {item['name'] for item in names_collection}
+
+    return render(request, 'main/contact.html', {'thank':thank, 'emails':emails, 'phones':phones, 'pages': pages, 'names': names, 'addresses':addresses})
 
 
 def checkout(request) :
