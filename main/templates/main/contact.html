@@ -39,21 +39,21 @@
         <h3>Contact info</h3>
         <br>
         <br>
-        <h6>Number :  +123456789
+        <h6>Number :  {% for phone in phones %} {{phone}}  &nbsp; &nbsp; {% endfor %}
         </h6>
         <br>
-        <h6>Address :   Ab new highway</h6>
+        <h6>Address :  {% for address in addresses %} {{address}}  &nbsp; &nbsp; {% endfor %}</h6>
         <br>
         <h6>E-mail :  {% for email in emails %} {{email}}  &nbsp; &nbsp; {% endfor %}</h4>
         <br>
-        <h6>Facebook page :  nlnklnpjm;lmoklk</h6>
+        <h6>Facebook page : {% for page in pages %} <a href= "{{page}}" target="_blank">FaceBook</a>  &nbsp; &nbsp; {% endfor %}</h6>
         <br>
       </div>
 
 </div>
  
 
-  {% endblock %}
+{% endblock %}
 
 
   {%block js%}
