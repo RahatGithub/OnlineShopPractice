@@ -43,6 +43,11 @@
     
     <script>
 
+        {% if msg|length != 0 %}
+            alert('{{msg}}');
+            window.location.href="/main/"
+        {% endif %}
+
         if(localStorage.getItem('cart') == null){
           var cart = {};
         }

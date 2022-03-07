@@ -43,17 +43,11 @@ def index(request):
 
 def search(request):
     query = request.GET.get('search')
-    # categories_collection = Categories.objects.values('category', 'id')
-    # categories = {item['category'] for item in categories_collection}
-
     dynamicProds = []
-    # captions_collection = Captions.objects.values('caption', 'id')
-    # captions = {item['caption'] for item in captions_collection}
     captions_collection = Dynamic_Product.objects.values('caption', 'id')
     captions = {item['caption'] for item in captions_collection}
 
     for caption in captions :
-        # prods = [Dynamic_Product.objects.filter(caption=caption), caption]
         prodtemp = Dynamic_Product.objects.filter(caption=caption)
         prod = [item for item in prodtemp if searchMatch(query, item)]
         if len(prod) != 0:
@@ -68,7 +62,7 @@ def search(request):
 
 # Function to check if the query(given input) matches the item(info stored in database) 
 def searchMatch(query, item): 
-    # Checking if the query string is in any product's name or category. Using upper() for both to remove case sensitivity
+    # Checking if the query string is in any product's name, description or category. Using upper() for both to remove case sensitivity
     if query.upper() in item.name.upper() or query.upper() in item.caption.upper() or query.upper() in item.desc.upper():
         return True 
     else: 
