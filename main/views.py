@@ -41,11 +41,17 @@ def index(request):
     return render(request, 'main/index.html', params)
 
 
+
 def search(request):
     query = request.GET.get('search')
+
     dynamicProds = []
     captions_collection = Dynamic_Product.objects.values('caption', 'id')
     captions = {item['caption'] for item in captions_collection}
+
+    usualProds = []
+    categories_collection = Product.objects.values('category', 'id')
+    categories = {item['category'] for item in categories_collection}
 
     for caption in captions :
         prodtemp = Dynamic_Product.objects.filter(caption=caption)
@@ -53,9 +59,17 @@ def search(request):
         if len(prod) != 0:
             dynamicProds.append(prod)
 
-    params = {'dynamicProds': dynamicProds, 'msg': "", 'query':query}
-    if len(dynamicProds) == 0 or len(query) < 3:
-        params = {'msg': "Please enter a valid keyword", 'query': query}
+    for category in categories :
+        prodtemp = Product.objects.filter(category=category)
+        prod = [item for item in prodtemp if searchMatch(query, item)]
+        if len(prod) != 0:
+            usualProds.append(prod)
+
+    allProds = [*dynamicProds, *usualProds]
+
+    params = {'allProds': allProds, 'dynamicProds': dynamicProds, 'msg': "", 'query':query}
+    if len(allProds) == 0 or len(query) < 3:
+        params = {'msg': "Sorry! We could not find a relevant search result.", 'query': query}
 
     return render(request, 'main/search.html', params)
 
@@ -63,7 +77,7 @@ def search(request):
 # Function to check if the query(given input) matches the item(info stored in database) 
 def searchMatch(query, item): 
     # Checking if the query string is in any product's name, description or category. Using upper() for both to remove case sensitivity
-    if query.upper() in item.name.upper() or query.upper() in item.caption.upper() or query.upper() in item.desc.upper():
+    if query.upper() in item.name.upper() or query.upper() in item.desc.upper():
         return True 
     else: 
         return False
