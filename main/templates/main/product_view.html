@@ -19,7 +19,7 @@
     <div class="container product-view">
         <div class="row">
             <div class="col-md-4 p-3">
-                <img src="/media/{{product.image}}" alt="" height="225px"> 
+                <img src="/media/{{product.image}}" alt="" height="225px" width="260px" class="border border-info"> 
             </div>
             <div class="col-md-6">
                 <h4 id="name_pr{{product.code}}" class="card-title text-info">{{product.name}}</h4>
@@ -31,8 +31,8 @@
                 </span>
                 <br>
                 <br>
-                <div class="fb-like" data-href="http://127.0.0.1:8000/main/products/{{product.id}}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
-                <div class="fb-comments" data-href="http://127.0.0.1:8000/main/products/{{product.id}}" data-width="" data-numposts="10"></div>
+                <div class="fb-like bg-light" data-href="http://127.0.0.1:8000/main/products/{{product.id}}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
+                <div class="fb-comments bg-light" data-href="http://127.0.0.1:8000/main/products/{{product.id}}" data-width="" data-numposts="10"></div>
             </div>
         </div>
     </div>

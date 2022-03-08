@@ -26,8 +26,17 @@
                                 <h6>Price: <span class="text-info"> BDT. <span id="price_pr{{i.code}}">{{i.price}} </span></span> </h6>
                                 <br>
                                 <span id="div_pr{{i.code}}" class="div_pr">
-                                    <button id="pr{{i.code}}" class="btn btn-info cart">Add to cart</button>
+                                    <button id="pr{{i.code}}" class="btn btn-info cart col-md-3 mx-2">Add to cart</button>
                                 </span>
+                                {% if i.caption %}
+                                    <a href="/main/dynamic_products/{{i.id}}">
+                                        <button id="view_pr{{i.code}}" class="btn btn-outline-info col-md-3 mx-2">View</button>
+                                    </a>
+                                {% elif i.category %}
+                                    <a href="/main/products/{{i.id}}">
+                                        <button id="view_pr{{i.code}}" class="btn btn-outline-info col-md-3">View</button>
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
