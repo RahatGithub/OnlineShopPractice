@@ -6,16 +6,19 @@ admin.site.register(MainCarousel)
 admin.site.register(OfferCarousel)
 admin.site.register(Categories)
 admin.site.register(Captions)
+admin.site.register(Contact)
+admin.site.register(Cont_info)
+admin.site.register(Dynamic_Product)
+admin.site.register(OrderUpdate)
 
-
-# admin.site.register(Product)
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", "category")
 
-admin.site.register(Contact)
-admin.site.register(Cont_info)
-admin.site.register(Dynamic_Product)
-admin.site.register(Order)
-admin.site.register(OrderUpdate)
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "order_id")
+
+
 

@@ -72,7 +72,7 @@
           </form>
 
           {% if request.user.is_superuser %}
-            <a href="{% url 'admin:index' %}" class="btn btn-warning mx-3 rounded-pill"><b>Admin Panel</b></a>
+            <a href="{% url 'admin:index' %}" target="_blank" class="btn btn-warning mx-3 rounded-pill"><b>Admin Panel</b></a>
           {% endif %}
 
           {% if user.is_authenticated %}
