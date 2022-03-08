@@ -6,7 +6,13 @@ admin.site.register(MainCarousel)
 admin.site.register(OfferCarousel)
 admin.site.register(Categories)
 admin.site.register(Captions)
-admin.site.register(Product)
+
+
+# admin.site.register(Product)
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ("name", "category")
+
 admin.site.register(Contact)
 admin.site.register(Cont_info)
 admin.site.register(Dynamic_Product)
