@@ -2,22 +2,11 @@
 
 {% load static %}
 
-{% comment %} {% block css_link %} "{% static 'main/css/index.css' %}" {% endblock %} {% endcomment %}
+{% block css_link %} "{% static 'main/css/index.css' %}" {% endblock %} 
+
 
 {% block title %} Shop {% endblock %}
 
-{% block css %}
-.carousel-item img {
-height: 300px;
-}
-.categories img {
-height: 200px;
-}
-.homepage-section img{
-height: 200px;
-}
-
-{% endblock %}
 
 {% block body %}
 
