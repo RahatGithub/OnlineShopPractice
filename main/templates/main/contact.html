@@ -4,29 +4,29 @@
 
 {% block body %}
 
-  <div>
+  <div class="my-3">
     <h3 align="center">Contact Us</h3>
-    <form action="/main/contact/" method="post" class="container">{% csrf_token %}
+    <form action="/main/contact/" method="post" class="container w-50">{% csrf_token %}
       <div class="form-group">
         <label for="name">Full Name</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name" Required>
       </div>
       <div class="form-group">
-        <label for="name">Email/Gmail</label>
+        <label for="name">Email</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email" Required>
       </div>
       <div class="form-group">
-        <label for="name">Phone/Telephone</label>
+        <label for="name">Phone</label>
         <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Phone Number" Required>
       </div>
       <div class="form-group">
         <div class="form-group">
-          <label for="desc">Sir, how can we help you ?</label>
+          <label for="desc">How can we help you ?</label>
           <textarea class="form-control" id="desc" name="desc" rows="3" Required></textarea>
         </div>
 
         <div class="d-flex justify-content-center row">
-          <button type="submit" class="btn btn-success col-3" style="background-color:orangered">Submit</button>
+          <button type="submit" class="btn btn-primary col-3">Submit</button>
         </div>
     </form>
   </div>
