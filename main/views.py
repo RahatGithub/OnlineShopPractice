@@ -85,7 +85,7 @@ def searchMatch(query, item):
     
 
 def about(request):
-    return HttpResponse("About us")
+    return render(request, 'main/about.html')
 
 
 def tracker(request):

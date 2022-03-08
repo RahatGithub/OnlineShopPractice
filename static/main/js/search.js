@@ -1,3 +1,9 @@
+if(msg.length != 0){
+    alert('{{msg}}');
+    window.location.href="/main/"
+}
+
+
 if(localStorage.getItem('cart') == null){
     var cart = {};
 }
@@ -13,11 +19,13 @@ $('.div_pr').on('click', 'button.cart', function() {
         
     } else {
         qty = 1;
-        name = document.getElementById('name_'+idstr).innerHTML
-        price = document.getElementById('price_'+idstr).innerHTML
+        name = document.getElementById('name_' + idstr).innerHTML
+        price = document.getElementById('price_' + idstr).innerHTML
+        //console.log("name: ", name, "price: ", price);
         cart[idstr] = [qty, name, parseInt(price)];
     }
     updateCart(cart);
+    //console.log(cart);
 });
 
 $('#popcart').popover();
@@ -25,23 +33,26 @@ updatePopover(cart);
 
 function updatePopover(cart) {
     var popStr = "";
-    popStr = popStr + "<h5> Your Shopping Cart </h5><div class='mx-2 my-2'>";
+    popStr += "<h5> Your Shopping Cart </h5><div class='mx-2 my-2'>";
     var i = 1;
     for (var item in cart) {
-        popStr = popStr + "<b>" + i + "</b>. ";
-        popStr = popStr + document.getElementById('name_' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
-        i = i + 1;
+        popStr += "<b>" + i + "</b>. ";
+        popStr += cart[item][1] + "... Qty: " + cart[item][0] + '<br>' + " Price: " + cart[item][2]*cart[item][0] + '<br>';
+        i += 1;
     }
-    popStr = popStr + "</div> <a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    if( Object.keys(cart) != 0 ){
+        popStr += "<a href='/main/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-danger' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    }
     document.getElementById('popcart').setAttribute('data-content', popStr);
-   
     $('#popcart').popover('toggle');
 }
 
 function clearCart() {
     cart = JSON.parse(localStorage.getItem('cart'));
     for (var item in cart) {
-        document.getElementById('div_' + item).innerHTML = '<button id="' + item + '" class="btn btn-info cart">Add To Cart</button>'
+        if(document.getElementById('div_' + item)){
+            document.getElementById('div_' + item).innerHTML = '<button id="' + item + '" class="btn btn-info cart">Add To Cart</button>';
+        }
     }
     localStorage.clear();
     cart = {};
@@ -51,8 +62,10 @@ function clearCart() {
 function updateCart(cart) {
     var sum = 0;
     for (var item in cart) {
-        sum = sum + cart[item][0];
-        document.getElementById('div_' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-info minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
+        sum = sum + cart[item][0]; //cart[item][0] gives the quantity of 'item'
+        if(document.getElementById('div_' + item)){
+            document.getElementById('div_' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-info minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-info plus'> + </button>";
+        }
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     document.getElementById('cart').innerHTML = sum;
