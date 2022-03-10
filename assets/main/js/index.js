@@ -48,13 +48,6 @@ $('#popcart').popover();
 updatePopover(cart);
 
 function updatePopover(cart) {
-    /*if (localStorage.getItem('popStr') == null) {
-        localStorage.setItem('popStr', '{"popStr": "<h5> Your Shopping Cart </h5>"}')
-        //checkout, clear cart বাটন এর নিচে যুক্ত করে দিতে হবে। মাঝখানে popStr এর বাকি জিনিসগুলো যুক্ত হবে।  
-    }
-    else {
-        popStr = JSON.parse(localStorage.getItem('popStr')).popStr;
-    }*/ 
     var popStr = "";
     popStr += "<h5> Your Shopping Cart </h5>";
     var i = 1;

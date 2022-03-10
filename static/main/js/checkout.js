@@ -29,7 +29,7 @@ if ($.isEmptyObject(cart)) {
     $('#itemsJson').val(JSON.stringify(cart)); //Set the value of #itemsJson input field to our 'cart', that is JSON.stringify(cart) 
 
     if(thank){
-        alert('Thanks BUDDY for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
+        alert('Thanks for ordering with us. Your order id is' + id + '. Use it to track your order using our order tracker');
         localStorage.clear();
         document.location = "/main";
     }

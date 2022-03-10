@@ -1,5 +1,5 @@
 if(msg.length != 0){
-    alert('{{msg}}');
+    alert(msg);
     window.location.href="/main/"
 }
 
